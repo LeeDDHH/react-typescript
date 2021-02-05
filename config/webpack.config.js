@@ -7,7 +7,7 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 });
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/index.tsx",
   output: {
     path: path.resolve('dist'),
     filename: '[name].js'
@@ -15,13 +15,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|ts)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'ts-loader'
         }
       }
     ]
+  },
+  resolve: {
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
+    alias: {
+      "@": path.resolve(__dirname, "src")
+    }
   },
   plugins: [htmlWebpackPlugin]
 }
