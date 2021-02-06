@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TodoListItem } from './TodoListItem';
 
-const todos: Todo[] = [
+const initialTodos: Todo[] = [
   {
     text: 'Walk the Dog',
     complete: false
@@ -13,6 +13,7 @@ const todos: Todo[] = [
 ];
 
 const App = () => {
+  const [todos, setTodos] = useState(initialTodos);
   return (
     <div>
       <TodoListItem todo={todos[0]} />
