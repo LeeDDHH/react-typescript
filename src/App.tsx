@@ -16,7 +16,7 @@ const initialTodos: Todo[] = [
 const App = () => {
   const [todos, setTodos] = useState(initialTodos);
 
-  const toggleTodo = (selectedTodo: Todo) => {
+  const toggleTodo: ToggleTodo = (selectedTodo: Todo) => {
     const newTodos = todos.map(todo => {
       if (todo === selectedTodo) {
         return {
@@ -28,10 +28,16 @@ const App = () => {
     })
     setTodos(newTodos);
   }
+
+  const addTodo: AddTodo = (text: string) => {
+    const newTodo = { text, complete: false }
+    setTodos([...todos, newTodo]);
+  }
+
   return (
     <Fragment>
       <TodoList todos={todos} toggleTodo={toggleTodo} />
-      <AddTodoForm />
+      <AddTodoForm addTodo={addTodo} />
     </Fragment>
   );
 }

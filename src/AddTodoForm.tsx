@@ -1,6 +1,10 @@
 import React from 'react';
 
-export const AddTodoForm: React.FC = () => {
+interface Props {
+  addTodo: AddTodo;
+}
+
+export const AddTodoForm: React.FC<Props> = ({ addTodo }) => {
   return (
     <form>
       <input type="text" />
