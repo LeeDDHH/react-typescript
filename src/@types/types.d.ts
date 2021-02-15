@@ -8,3 +8,9 @@ interface Todo {
 interface ToggleTodo {
   (selectedTodo: Todo): void;
 }
+
+// type AddTodo = (text: string) => void;
+
+interface AddTodo {
+  (text: string): void;
+}
