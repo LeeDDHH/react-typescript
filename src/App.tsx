@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { TodoList } from './TodoList';
+import { AddTodoForm } from './AddTodoForm';
 
 const initialTodos: Todo[] = [
   {
@@ -27,7 +28,12 @@ const App = () => {
     })
     setTodos(newTodos);
   }
-  return <TodoList todos={todos} toggleTodo={toggleTodo} />;
+  return (
+    <Fragment>
+      <TodoList todos={todos} toggleTodo={toggleTodo} />
+      <AddTodoForm />
+    </Fragment>
+  );
 }
 
 export default App;
