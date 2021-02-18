@@ -14,10 +14,10 @@ const initialTodos: Todo[] = [
 ];
 
 const App = () => {
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos]: [Todo[], React.Dispatch<React.SetStateAction<Todo[]>>] = useState<Todo[]>(initialTodos);
 
   const toggleTodo: ToggleTodo = (selectedTodo: Todo) => {
-    const newTodos = todos.map(todo => {
+    const newTodos: Todo[] = todos.map((todo: Todo) => {
       if (todo === selectedTodo) {
         return {
           ...todo,
@@ -29,7 +29,7 @@ const App = () => {
     setTodos(newTodos);
   }
 
-  const addTodo: AddTodo = (text: string) => {
+  const addTodo: AddTodo = (text: TodoText) => {
     const newTodo = { text, complete: false }
     setTodos([...todos, newTodo]);
   }

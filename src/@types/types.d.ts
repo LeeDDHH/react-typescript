@@ -14,3 +14,9 @@ interface ToggleTodo {
 interface AddTodo {
   (text: string): void;
 }
+
+type TodoText = string;
+
+interface TextChange {
+  (todo: TodoText): void;
+}
