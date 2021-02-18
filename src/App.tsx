@@ -1,17 +1,9 @@
 import React, { useState, Fragment } from 'react';
 import { TodoList } from './TodoList';
 import { AddTodoForm } from './AddTodoForm';
+import { DeleteTodoForm } from './DeleteTodoForm';
 
-const initialTodos: Todo[] = [
-  {
-    text: 'Walk the Dog',
-    complete: false
-  },
-  {
-    text: 'Write app',
-    complete: true
-  }
-];
+const initialTodos: Todo[] = [];
 
 const App = () => {
   const [todos, setTodos]: [Todo[], React.Dispatch<React.SetStateAction<Todo[]>>] = useState<Todo[]>(initialTodos);
@@ -34,10 +26,18 @@ const App = () => {
     setTodos([...todos, newTodo]);
   }
 
+  const deleteTodo: DeleteTodo = () => {
+    const newTodo: Todo[] = todos.filter((todo: Todo) => {
+      return todo.complete === false;
+    });
+    setTodos(newTodo);
+  }
+
   return (
     <Fragment>
       <TodoList todos={todos} toggleTodo={toggleTodo} />
       <AddTodoForm addTodo={addTodo} />
+      <DeleteTodoForm deleteTodo={deleteTodo}/>
     </Fragment>
   );
 }

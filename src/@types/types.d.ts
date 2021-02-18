@@ -15,6 +15,10 @@ interface AddTodo {
   (text: string): void;
 }
 
+interface DeleteTodo {
+  (): void;
+}
+
 type TodoText = string;
 
 interface TextChange {
