@@ -13,6 +13,7 @@ export const AddTodoForm: React.FC<Props> = ({ addTodo }) => {
 
   const addTodoText = (e: React.SyntheticEvent<EventTarget>): void => {
     e.preventDefault();
+    if (text.length < 1) return;
     addTodo(text);
     setText('');
   }
