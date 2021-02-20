@@ -12,9 +12,11 @@ export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {
   const generateTodoList = (todos: Todo[]) => {
     if (todos.length < 1) {
       return (
-        <div>
-          There's nothing to Todo
-        </div>
+        <EmptyList>
+          <h1>
+            Todoがないカモ
+          </h1>
+        </EmptyList>
       )
     }
 
@@ -37,6 +39,32 @@ export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {
   );
 }
 
+const EmptyList = styled.div`
+  width: 100%;
+  text-align: center;
+  color: #666666;
+
+  @media (min-width: 768px) {
+    width: 600px;
+  }
+`
+
 const TodoListItems = styled.ul`
+  width: 100%;
   list-style: none;
+  padding: 0px;
+  margin: 0.5rem 0px;
+
+  @media (min-width: 768px) {
+    width: 600px;
+  }
+
+  li {
+    padding: 10px 0px;
+    border-bottom: 1px solid #555555;
+  }
+
+  li:first-child {
+    border-top: 1px solid #555555;
+  }
 `

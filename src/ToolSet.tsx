@@ -23,7 +23,7 @@ export const ToolSet: React.FC<Props> = ({ changeAllTodoChecked, deleteTodo, ini
 const ToolSetContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 90%;
+  width: 100%;
   justify-content: center;
   margin-bottom: 10px;
 
@@ -33,5 +33,9 @@ const ToolSetContainer = styled.div`
 
   button:last-child {
     margin-right: 0px;
+  }
+
+  @media (min-width: 768px) {
+    width: 600px;
   }
 `
