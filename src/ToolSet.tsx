@@ -2,17 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import { DeleteTodoForm } from './DeleteTodoForm';
 import { AllTodoCheckedForm } from './AllTodoCheckedForm';
+import { InitializeTodoListForm } from './InitializeTodoListForm';
 
 interface Props {
-  changeAllTodoChecked: ChangeAllTodoChecked;
-  deleteTodo: DeleteTodo;
+  changeAllTodoChecked: NoReturn;
+  deleteTodo: NoReturn;
+  initializeTodoList: NoReturn;
 }
 
-export const ToolSet: React.FC<Props> = ({ changeAllTodoChecked, deleteTodo }) => {
+export const ToolSet: React.FC<Props> = ({ changeAllTodoChecked, deleteTodo, initializeTodoList }) => {
   return (
     <ToolSetContainer>
       <AllTodoCheckedForm changeAllTodoChecked={changeAllTodoChecked} />
       <DeleteTodoForm deleteTodo={deleteTodo} />
+      <InitializeTodoListForm initializeTodoList={initializeTodoList} />
     </ToolSetContainer>
   )
 }

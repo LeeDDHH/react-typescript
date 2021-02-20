@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ToolSetBtn } from './Util/ToolSetBtn';
 
 interface Props {
-  deleteTodo: DeleteTodo;
+  deleteTodo: NoReturn;
 }
 
 export const DeleteTodoForm: React.FC<Props> = ({ deleteTodo }) => {
@@ -10,15 +11,11 @@ export const DeleteTodoForm: React.FC<Props> = ({ deleteTodo }) => {
     <CheckedItemDelBtn
       onClick={deleteTodo}
     >
-      ✅ ▶ 🗑️
+      ✅ → 🗑️
     </CheckedItemDelBtn>
   )
 }
 
-const CheckedItemDelBtn = styled.button`
+const CheckedItemDelBtn = styled(ToolSetBtn)`
   background-color: pink;
-  border-radius: 3px;
-  width: 70px;
-  height: 43px;
-  border: 1px solid #999999;
 `

@@ -5,6 +5,18 @@ interface Todo {
 
 // type ToggleTodo = (selectedTodo: Todo) => void;
 
+interface UseLocalStorage {
+  (): [Todo[],Function]
+}
+
+type InitialTodos = string | null;
+
+type InitialLocalStorage = [Todo[],Function];
+
+interface SetTodoList {
+  (todoList: Todo[]): void;
+}
+
 interface ToggleTodo {
   (selectedTodo: Todo): void;
 }
@@ -15,11 +27,19 @@ interface AddTodo {
   (text: string): void;
 }
 
-interface ChangeAllTodoChecked {
-  (): void;
-}
+// interface ChangeAllTodoChecked {
+//   (): void;
+// }
 
-interface DeleteTodo {
+// interface DeleteTodo {
+//   (): void;
+// }
+
+// interface InitializeTodoList {
+//   (): void;
+// }
+
+interface NoReturn {
   (): void;
 }
 

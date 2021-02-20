@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ToolSetBtn } from './Util/ToolSetBtn';
 
 interface Props {
-  changeAllTodoChecked: ChangeAllTodoChecked;
+  changeAllTodoChecked: NoReturn;
 }
 
 export const AllTodoCheckedForm: React.FC<Props> = ({ changeAllTodoChecked }) => {
@@ -10,15 +11,11 @@ export const AllTodoCheckedForm: React.FC<Props> = ({ changeAllTodoChecked }) =>
     <ChangeAllTodoToCheckedBtn
       onClick={changeAllTodoChecked}
     >
-      📝 ▶ ✅
+      ☑️ ↔ ✅
     </ChangeAllTodoToCheckedBtn>
   )
 }
 
-const ChangeAllTodoToCheckedBtn = styled.button`
+const ChangeAllTodoToCheckedBtn = styled(ToolSetBtn)`
   background-color: skyblue;
-  border-radius: 3px;
-  width: 70px;
-  height: 43px;
-  border: 1px solid #999999;
 `
