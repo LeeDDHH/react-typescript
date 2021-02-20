@@ -1,7 +1,8 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import { TodoList } from './TodoList';
 import { AddTodoForm } from './AddTodoForm';
-import { DeleteTodoForm } from './DeleteTodoForm';
+import { ToolSet } from './ToolSet';
 
 const initialTodos: Todo[] = [];
 
@@ -26,6 +27,13 @@ const App = () => {
     setTodos([...todos, newTodo]);
   }
 
+  const changeAllTodoChecked: ChangeAllTodoChecked = () => {
+    const newTodos: Todo[] = todos.map((todo: Todo) => {
+      return {...todo, complete: true}
+    })
+    setTodos(newTodos);
+  } 
+
   const deleteTodo: DeleteTodo = () => {
     const newTodo: Todo[] = todos.filter((todo: Todo) => {
       return todo.complete === false;
@@ -34,12 +42,21 @@ const App = () => {
   }
 
   return (
-    <Fragment>
-      <TodoList todos={todos} toggleTodo={toggleTodo} />
+    <MainContainer>
       <AddTodoForm addTodo={addTodo} />
-      <DeleteTodoForm deleteTodo={deleteTodo}/>
-    </Fragment>
+      <ToolSet
+        changeAllTodoChecked={changeAllTodoChecked}
+        deleteTodo={deleteTodo}
+      />
+      <TodoList todos={todos} toggleTodo={toggleTodo} />
+    </MainContainer>
   );
 }
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export default App;

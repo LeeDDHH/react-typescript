@@ -15,6 +15,10 @@ interface AddTodo {
   (text: string): void;
 }
 
+interface ChangeAllTodoChecked {
+  (): void;
+}
+
 interface DeleteTodo {
   (): void;
 }

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import styled from 'styled-components';
 import { TodoListItem } from './TodoListItem';
 
 interface Props {
@@ -18,7 +19,7 @@ export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {
     }
 
     return (
-      <ul>
+      <TodoListItems>
         {todos.map(todo => (
           <TodoListItem
             key={todo.text}
@@ -26,7 +27,7 @@ export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {
             toggleTodo={toggleTodo}
           />
         ))}
-      </ul>
+      </TodoListItems>
     )
   }
   return (
@@ -35,3 +36,7 @@ export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {
     </Fragment>
   );
 }
+
+const TodoListItems = styled.ul`
+  list-style: none;
+`

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 
 interface Props {
   deleteTodo: DeleteTodo;
@@ -6,10 +7,18 @@ interface Props {
 
 export const DeleteTodoForm: React.FC<Props> = ({ deleteTodo }) => {
   return (
-    <button
+    <CheckedItemDelBtn
       onClick={deleteTodo}
     >
-      Delete checked todo
-    </button>
+      ✅ ▶ 🗑️
+    </CheckedItemDelBtn>
   )
 }
+
+const CheckedItemDelBtn = styled.button`
+  background-color: pink;
+  border-radius: 3px;
+  width: 70px;
+  height: 43px;
+  border: 1px solid #999999;
+`

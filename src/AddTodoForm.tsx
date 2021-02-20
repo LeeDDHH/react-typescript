@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
 interface Props {
   addTodo: AddTodo;
@@ -19,18 +20,50 @@ export const AddTodoForm: React.FC<Props> = ({ addTodo }) => {
   }
 
   return (
-    <form>
-      <input
+    <Form>
+      <TextInput
         type="text"
         value={text}
         onChange={e => { textChange(e.target.value) }}
       />
-      <button
+      <AddButton
         type="submit"
         onClick={addTodoText}
       >
-        Add Todo
-      </button>
-    </form>
+        ＋
+      </AddButton>
+    </Form>
   )
 }
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 10px;
+  @media (min-width: 768px) {
+    width: 600px;
+  }
+`
+
+const TextInput = styled.input`
+  border: 1px solid #999999;
+  border-radius: 3px;
+  background-color: ghostwhite;
+  width: 70%;
+  height: 40px;
+  margin-right: 5px;
+  font-size: 36px;
+  font-weight: bold;
+  text-indent: 0.5rem;
+`
+
+const AddButton = styled.button`
+  background-color: gold;
+  border-radius: 3px;
+  width: 50px;
+  height: 43px;
+  border: 1px solid #999999;
+  font-weight: bold;
+`
