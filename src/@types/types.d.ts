@@ -21,6 +21,10 @@ interface ToggleTodo {
   (selectedTodo: Todo): void;
 }
 
+interface DeleteSelectedTodo {
+  (selectedTodo: Todo): void;
+}
+
 // type AddTodo = (text: string) => void;
 
 interface AddTodo {

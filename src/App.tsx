@@ -57,11 +57,18 @@ const App = () => {
       return {...todo, complete: !todo.complete}
     })
     setTodos(newTodos);
-  } 
+  }
 
   const deleteTodo: NoReturn = () => {
     const newTodo: Todo[] = todos.filter((todo: Todo) => {
       return todo.complete === false;
+    });
+    setTodos(newTodo);
+  }
+
+  const deleteSelectedTodo: DeleteSelectedTodo = (selectedTodo: Todo) => {
+    const newTodo: Todo[] = todos.filter((todo: Todo) => {
+      return todo !== selectedTodo;
     });
     setTodos(newTodo);
   }
@@ -80,7 +87,11 @@ const App = () => {
         deleteTodo={deleteTodo}
         initializeTodoList={initializeTodoList}
       />
-      <TodoList todos={todos} toggleTodo={toggleTodo} />
+      <TodoList
+        todos={todos}
+        toggleTodo={toggleTodo}
+        deleteSelectedTodo={deleteSelectedTodo}
+      />
     </MainContainer>
   );
 }

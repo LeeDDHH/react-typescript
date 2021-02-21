@@ -5,9 +5,10 @@ import { TodoListItem } from './TodoListItem';
 interface Props {
   todos: Todo[];
   toggleTodo: ToggleTodo;
+  deleteSelectedTodo: DeleteSelectedTodo;
 }
 
-export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {
+export const TodoList: React.FC<Props> = ({ todos, toggleTodo, deleteSelectedTodo }) => {
 
   const generateTodoList = (todos: Todo[]) => {
     if (todos.length < 1) {
@@ -27,6 +28,7 @@ export const TodoList: React.FC<Props> = ({ todos, toggleTodo }) => {
             key={todo.text}
             todo={todo}
             toggleTodo={toggleTodo}
+            deleteSelectedTodo={deleteSelectedTodo}
           />
         ))}
       </TodoListItems>
