@@ -93,6 +93,10 @@ const App = () => {
     setEditableTodo({});
   }
 
+  const initEditableTodo: NoReturn = () => {
+    setEditableTodo({});
+  }
+
   const initializeTodoList: NoReturn = () => {
     const result = window.confirm("todoListをすべて消しますか？\n※一度削除すると戻せません。");
 
@@ -114,6 +118,7 @@ const App = () => {
         selectEditableTodo={selectEditableTodo}
         editableTodo={editableTodo}
         changeTodoText={changeTodoText}
+        initEditableTodo={initEditableTodo}
       />
     </MainContainer>
   );

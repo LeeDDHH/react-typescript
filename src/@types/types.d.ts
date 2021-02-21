@@ -47,6 +47,10 @@ interface AddTodo {
 //   (): void;
 // }
 
+// interface InitEditableTodo {
+//   (): void;
+// }
+
 interface NoReturn {
   (): void;
 }

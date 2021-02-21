@@ -9,9 +9,18 @@ interface Props {
   selectEditableTodo: SelectEditableTodo;
   editableTodo: Todo | {};
   changeTodoText: ChangeTodoText;
+  initEditableTodo: NoReturn;
 }
 
-export const TodoList: React.FC<Props> = ({ todos, toggleTodo, deleteSelectedTodo, selectEditableTodo, editableTodo, changeTodoText }) => {
+export const TodoList: React.FC<Props> = ({
+  todos,
+  toggleTodo,
+  deleteSelectedTodo,
+  selectEditableTodo,
+  editableTodo,
+  changeTodoText,
+  initEditableTodo
+}) => {
 
   const generateTodoList = (todos: Todo[]) => {
     if (todos.length < 1) {
@@ -35,6 +44,7 @@ export const TodoList: React.FC<Props> = ({ todos, toggleTodo, deleteSelectedTod
             selectEditableTodo={selectEditableTodo}
             isEditable={editableTodo === todo}
             changeTodoText={changeTodoText}
+            initEditableTodo={initEditableTodo}
           />
         ))}
       </TodoListItems>

@@ -8,9 +8,18 @@ interface Props {
   selectEditableTodo: SelectEditableTodo;
   isEditable: boolean;
   changeTodoText: ChangeTodoText;
+  initEditableTodo: NoReturn;
 }
 
-export const TodoListItem: React.FC<Props> = ({ todo, toggleTodo, deleteSelectedTodo, selectEditableTodo, isEditable, changeTodoText }) => {
+export const TodoListItem: React.FC<Props> = ({
+  todo,
+  toggleTodo,
+  deleteSelectedTodo,
+  selectEditableTodo,
+  isEditable,
+  changeTodoText,
+  initEditableTodo
+}) => {
 
   const [text, setText]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,8 +42,13 @@ export const TodoListItem: React.FC<Props> = ({ todo, toggleTodo, deleteSelected
     setText('');
   }
 
-  const keyDownEvent = (e: React.KeyboardEvent) => {
+  const keyDownEvent = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter') addTodoText(e);
+  }
+
+  const cancelEdit: NoReturn = () => {
+    setText('');
+    initEditableTodo();
   }
 
   const generateItem = () => {
@@ -46,6 +60,7 @@ export const TodoListItem: React.FC<Props> = ({ todo, toggleTodo, deleteSelected
           value={text}
           onChange={e => { textChange(e.target.value) }}
           onKeyDown={e => { keyDownEvent(e) }}
+          onBlur={() => { cancelEdit() } }
         />
       )
     }
@@ -122,7 +137,7 @@ const TodoItem = styled.li`
 `
 
 const EditableTodo = styled.input`
-  width: 93%;
+  width: 86%;
   border: 0px;
   border-radius: 5px;
   margin-left: 41px;
