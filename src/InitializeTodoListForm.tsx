@@ -17,5 +17,5 @@ export const InitializeTodoListForm: React.FC<Props> = ({ initializeTodoList }) 
 }
 
 const AllItemDelBtn = styled(ToolSetBtn)`
-  background-color: red;
+  background-color: coral;
 `
