@@ -6,9 +6,12 @@ interface Props {
   todos: Todo[];
   toggleTodo: ToggleTodo;
   deleteSelectedTodo: DeleteSelectedTodo;
+  selectEditableTodo: SelectEditableTodo;
+  editableTodo: Todo | {};
+  changeTodoText: ChangeTodoText;
 }
 
-export const TodoList: React.FC<Props> = ({ todos, toggleTodo, deleteSelectedTodo }) => {
+export const TodoList: React.FC<Props> = ({ todos, toggleTodo, deleteSelectedTodo, selectEditableTodo, editableTodo, changeTodoText }) => {
 
   const generateTodoList = (todos: Todo[]) => {
     if (todos.length < 1) {
@@ -25,10 +28,13 @@ export const TodoList: React.FC<Props> = ({ todos, toggleTodo, deleteSelectedTod
       <TodoListItems>
         {todos.map(todo => (
           <TodoListItem
-            key={todo.text}
+            key={todo.id}
             todo={todo}
             toggleTodo={toggleTodo}
             deleteSelectedTodo={deleteSelectedTodo}
+            selectEditableTodo={selectEditableTodo}
+            isEditable={editableTodo === todo}
+            changeTodoText={changeTodoText}
           />
         ))}
       </TodoListItems>

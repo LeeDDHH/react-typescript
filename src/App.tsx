@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { nanoid } from 'nanoid'
 import { TodoList } from './TodoList';
 import { AddTodoForm } from './AddTodoForm';
 import { ToolSet } from './ToolSet';
@@ -31,8 +32,8 @@ const useLocalStorage: UseLocalStorage = () => {
 }
 
 const App = () => {
-  // const [todos, setTodos]: [Todo[], React.Dispatch<React.SetStateAction<Todo[]>>] = useState<Todo[]>(initialTodos);
   const [todos, setTodos]: InitialLocalStorage = useLocalStorage();
+  const [editableTodo, setEditableTodo] = useState({});
 
   const toggleTodo: ToggleTodo = (selectedTodo: Todo) => {
     const newTodos: Todo[] = todos.map((todo: Todo) => {
@@ -48,7 +49,7 @@ const App = () => {
   }
 
   const addTodo: AddTodo = (text: TodoText) => {
-    const newTodo = { text, complete: false }
+    const newTodo = { id: nanoid(),text, complete: false }
     setTodos([...todos, newTodo]);
   }
 
@@ -73,6 +74,25 @@ const App = () => {
     setTodos(newTodo);
   }
 
+  const selectEditableTodo: SelectEditableTodo = (selectedTodo: Todo) => {
+    const EditableTodo = todos.filter((todo) => { return todo === selectedTodo })[0]
+    setEditableTodo(EditableTodo);
+  }
+
+  const changeTodoText: ChangeTodoText = (selectedTodo: Todo, modifiedText: string) => {
+    const newTodos: Todo[] = todos.map((todo: Todo) => {
+    if (todo === selectedTodo) {
+        return {
+          ...todo,
+          text: modifiedText
+        }
+      }
+      return todo;
+    })
+    setTodos(newTodos);
+    setEditableTodo({});
+  }
+
   const initializeTodoList: NoReturn = () => {
     const result = window.confirm("todoListをすべて消しますか？\n※一度削除すると戻せません。");
 
@@ -91,6 +111,9 @@ const App = () => {
         todos={todos}
         toggleTodo={toggleTodo}
         deleteSelectedTodo={deleteSelectedTodo}
+        selectEditableTodo={selectEditableTodo}
+        editableTodo={editableTodo}
+        changeTodoText={changeTodoText}
       />
     </MainContainer>
   );

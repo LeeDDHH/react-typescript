@@ -1,4 +1,5 @@
 interface Todo {
+  id: string;
   text: string;
   complete: boolean;
 }
@@ -25,6 +26,9 @@ interface DeleteSelectedTodo {
   (selectedTodo: Todo): void;
 }
 
+interface SelectEditableTodo {
+  (selectedTodo: Todo): void;
+}
 // type AddTodo = (text: string) => void;
 
 interface AddTodo {
@@ -51,4 +55,8 @@ type TodoText = string;
 
 interface TextChange {
   (todo: TodoText): void;
+}
+
+interface ChangeTodoText {
+  (selectedTodo: Todo, modifiedText: string): void;
 }

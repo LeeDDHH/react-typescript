@@ -1,38 +1,94 @@
-import React from 'react';
+import React, { Fragment, useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 interface Props {
   todo: Todo;
   toggleTodo: ToggleTodo;
   deleteSelectedTodo: DeleteSelectedTodo;
+  selectEditableTodo: SelectEditableTodo;
+  isEditable: boolean;
+  changeTodoText: ChangeTodoText;
 }
 
-export const TodoListItem: React.FC<Props> = ({ todo, toggleTodo, deleteSelectedTodo }) => {
+export const TodoListItem: React.FC<Props> = ({ todo, toggleTodo, deleteSelectedTodo, selectEditableTodo, isEditable, changeTodoText }) => {
+
+  const [text, setText]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef && inputRef.current) {
+      inputRef.current.value = todo.text;
+      inputRef.current.focus();
+    }
+  });
+
+  const textChange = (text: string): void => {
+    setText(text);
+  }
+
+  const addTodoText = (e: React.SyntheticEvent<EventTarget>): void => {
+    e.preventDefault();
+    if (text.length < 1) return;
+    changeTodoText(todo, text);
+    setText('');
+  }
+
+  const keyDownEvent = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') addTodoText(e);
+  }
+
+  const generateItem = () => {
+    if (isEditable === true) {
+      return (
+        <EditableTodo
+          ref={inputRef}
+          type="text"
+          value={text}
+          onChange={e => { textChange(e.target.value) }}
+          onKeyDown={e => { keyDownEvent(e) }}
+        />
+      )
+    }
+
+    return (
+      <Fragment>
+        <label
+          style={{ textDecoration: todo.complete ? 'line-through' : undefined }}
+        >
+          <input
+            type="checkbox"
+            checked={todo.complete}
+            onChange={() => {
+              toggleTodo(todo)
+            }}
+          />
+          {todo.text}
+        </label>
+        <ItemToolContainer>
+          <EditBtn
+            className="hoverAppear"
+            onClick={() => {
+              selectEditableTodo(todo)
+            }}
+          >
+            ✏️
+          </EditBtn>
+          <DelBtn
+            className="hoverAppear"
+            onClick={() => {
+              deleteSelectedTodo(todo)
+            }}
+          >
+            🗑️
+          </DelBtn>
+        </ItemToolContainer>
+      </Fragment>
+    )
+  }
+
   return (
     <TodoItem>
-      <label
-        style={{ textDecoration: todo.complete ? 'line-through' : undefined }}
-      >
-        <input
-          type="checkbox"
-          checked={todo.complete}
-          onChange={() => {
-            toggleTodo(todo)
-          }}
-        />
-        {todo.text}
-      </label>
-      <ItemToolContainer>
-        <EditBtn className="hoverAppear">✏️</EditBtn>
-        <DelBtn
-          className="hoverAppear"
-          onClick={() => {
-            deleteSelectedTodo(todo)
-          }}
-        >
-          🗑️
-        </DelBtn>
-      </ItemToolContainer>
+      {generateItem()}
     </TodoItem>
   );
 }
@@ -63,6 +119,15 @@ const TodoItem = styled.li`
   :hover > div .hoverAppear {
     display: block;
   }
+`
+
+const EditableTodo = styled.input`
+  width: 93%;
+  border: 0px;
+  border-radius: 5px;
+  margin-left: 41px;
+  font-size: 18px;
+  background-color: palegoldenrod;
 `
 
 const ItemToolContainer = styled.div`
