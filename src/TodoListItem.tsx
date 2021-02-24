@@ -11,6 +11,8 @@ interface Props {
   initEditableTodo: NoReturn;
 }
 
+const initialCompositionState = false;
+
 export const TodoListItem: React.FC<Props> = ({
   todo,
   toggleTodo,
@@ -22,17 +24,46 @@ export const TodoListItem: React.FC<Props> = ({
 }) => {
 
   const [text, setText]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>('');
+  // IMEで入力中の判定（true: 入力中、false: 非入力）
+  const [isOnComposition, setIsOnComposition]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(initialCompositionState);
   const inputRef = useRef<HTMLInputElement>(null);
+  // 直前のキー入力がIME入力だったのかどうかを判定するためのフラグ
+  const previousCompositionStateRef = useRef<boolean>(initialCompositionState);
 
   useEffect(() => {
     if (inputRef && inputRef.current) {
-      inputRef.current.value = todo.text;
-      inputRef.current.focus();
+      // 直前の入力がIMEではなく、現在の入力もIMEではない時(主に、英語入力を想定)
+      // 編集ボタンを押した直後
+      if (!previousCompositionStateRef.current && !isOnComposition) {
+        // レンダーされた後のDOMに直接書き込みをする
+        inputRef.current.value = todo.text;
+        // レンダーされた後のDOMにフォーカスを当てる
+        inputRef.current.focus();
+      }
     }
   });
 
   const textChange = (text: string): void => {
     setText(text);
+  }
+
+  // IME入力中の処理
+  const handleComposition = (e: React.CompositionEvent<HTMLInputElement>): void => {
+    if (e.type === 'compositionend') {
+      // IME変換が終了したら現在のIME入力判定をfalseにする
+      setIsOnComposition(false);
+    } else {
+      // IME変換が認識されたら、直前のキー入力として現在のIME入力の判定を代入する(trueに変わる)
+      _handlePreviousCompositionStateRef(isOnComposition);
+      // IME変換が終了したら現在のIME入力判定をtrueにする
+      setIsOnComposition(true);
+    }
+  }
+
+  const handleSelectEditableTodo = (todo: Todo): void => {
+    // 編集ボタンを押したら、Todoの内容をstateに書き込む
+    setText(todo.text);
+    selectEditableTodo(todo);
   }
 
   const addTodoText = (e: React.SyntheticEvent<EventTarget>): void => {
@@ -43,12 +74,26 @@ export const TodoListItem: React.FC<Props> = ({
   }
 
   const keyDownEvent = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'Enter') addTodoText(e);
+    // IME入力中ではなく、Enter/returnが押されたら、書かれているTodo内容を保存する
+    if (!isOnComposition && e.key === 'Enter') {
+      addTodoText(e);
+      // 現在のIME状態/直前のIME状態を初期化する
+      setIsOnComposition(initialCompositionState);
+      _handlePreviousCompositionStateRef(initialCompositionState);
+    }
   }
 
   const cancelEdit: NoReturn = () => {
+    // フォーカスが外れたらTodoで保持していた状態を初期化する
     setText('');
     initEditableTodo();
+    setIsOnComposition(initialCompositionState);
+    _handlePreviousCompositionStateRef(initialCompositionState);
+  }
+
+  // 直前のIME状態を保持する
+  const _handlePreviousCompositionStateRef = (state: boolean): void => {
+    previousCompositionStateRef.current = state;
   }
 
   const generateItem = () => {
@@ -59,6 +104,9 @@ export const TodoListItem: React.FC<Props> = ({
           type="text"
           value={text}
           onChange={e => { textChange(e.target.value) }}
+          onCompositionStart={e => { handleComposition(e) } }
+          onCompositionUpdate={e => { handleComposition(e) } }
+          onCompositionEnd={e => { handleComposition(e) } }
           onKeyDown={e => { keyDownEvent(e) }}
           onBlur={() => { cancelEdit() } }
         />
@@ -83,7 +131,7 @@ export const TodoListItem: React.FC<Props> = ({
           <EditBtn
             className="hoverAppear"
             onClick={() => {
-              selectEditableTodo(todo)
+              handleSelectEditableTodo(todo)
             }}
           >
             ✏️
