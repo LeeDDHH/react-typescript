@@ -1,0 +1,23 @@
+name: todolist deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: build todolist
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/stepup-node@v2
+        with:
+          node-version: 12.x
+
+      - run: npm run build
+
+      - run: npx netlify-cli deploy --prod --dir=./dist
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
