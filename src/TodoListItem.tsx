@@ -26,6 +26,7 @@ export const TodoListItem: React.FC<Props> = ({
   const [text, setText]: [string, React.Dispatch<React.SetStateAction<string>>] = useState<string>('');
   // IMEで入力中の判定（true: 入力中、false: 非入力）
   const [isOnComposition, setIsOnComposition]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(initialCompositionState);
+  // 編集可能な状態にレンダリングされたDOMに対してfocusイベントを発生させるためのref
   const inputRef = useRef<HTMLInputElement>(null);
   // 直前のキー入力がIME入力だったのかどうかを判定するためのフラグ
   const previousCompositionStateRef = useRef<boolean>(initialCompositionState);
@@ -35,9 +36,9 @@ export const TodoListItem: React.FC<Props> = ({
       // 直前の入力がIMEではなく、現在の入力もIMEではない時(主に、英語入力を想定)
       // 編集ボタンを押した直後
       if (!previousCompositionStateRef.current && !isOnComposition) {
-        // レンダーされた後のDOMに直接書き込みをする
-        inputRef.current.value = todo.text;
         // レンダーされた後のDOMにフォーカスを当てる
+        // ※編集可能な状態のコンポーネントにレンダリングされてから1回だけinputRefに対してfocusの参照をすればいいのだが、いい方法が見つからず再レンダーごとにfocus参照をしている
+        // ※useRefの性質上、「描画に関係のない状態」を保つだけなので、Todo編集に影響はない
         inputRef.current.focus();
       }
     }
