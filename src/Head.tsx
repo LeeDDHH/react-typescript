@@ -21,7 +21,7 @@ const Head = () => {
         { property: "og:description", content: "簡単なTodoList" },
         { property: "og:locale", content: "ja_JP" },
         { property: "og:site_name", content: "TodoList" },
-        { property: "og:image", content: "https://todolist.expfrom.me/image/og/ogp_image.png" },
+        { property: "og:image", content: "https://todolist.expfrom.me/images/og/ogp_image.png" },
         { property: "og:image:alt", content: "Og Image Alt TodoList" },
         { property: "og:image:width", content: "1140" },
         { property: "og:image:height", content: "620" },
